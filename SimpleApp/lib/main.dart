@@ -29,73 +29,18 @@ class MyApp extends StatelessWidget {
             textTheme: const TextTheme(
                 bodyMedium: TextStyle(
                     fontFamily: 'Arial', fontSize: 24, color: Colors.black))),
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text("Flutter App"),
-            centerTitle: true,
-          ),
-          body: Column(
-            children: [
-              Container(
-                height: 150,
-                width: 150,
-                padding: const EdgeInsets.all(30),
-                margin: const EdgeInsets.all(20),
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.pink,
-                ),
-                child: (const FlutterLogo()),
-              ),
-              const Expanded(
-                child: Center(
-                  child: Text("Welcome to Flutter !"),
-                ),
-              )
-            ],
-          ),
-          drawer: const Drawer(
-            child: Center(
-              child: Text("My Profile"),
-            ),
-          ),
-          floatingActionButton: const LikeUsButton(),
-          bottomNavigationBar: BottomAppBar(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      debugPrint("Home button clicked");
-                    },
-                    icon: const Icon(Icons.home)),
-                IconButton(
-                    onPressed: () {
-                      debugPrint("Search button clicked");
-                    },
-                    icon: const Icon(Icons.search)),
-                IconButton(
-                    onPressed: () {
-                      debugPrint("Settings button clicked");
-                    },
-                    icon: const Icon(
-                      Icons.settings,
-                    )),
-              ],
-            ),
-          ),
-        ));
+        home: const MyHomePage());
   }
 }
 
-class LikeUsButton extends StatefulWidget {
-  const LikeUsButton({super.key});
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
 
   @override
-  State<LikeUsButton> createState() => _LikeUsButtonState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _LikeUsButtonState extends State<LikeUsButton> {
+class _MyHomePageState extends State<MyHomePage> {
   // ignore: unused_field
   int _counter = 0;
 
@@ -107,10 +52,74 @@ class _LikeUsButtonState extends State<LikeUsButton> {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: _incrementCounter,
-      tooltip: "Liked $_counter times",
-      child: const Icon(Icons.thumb_up_alt_sharp),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Flutter App"),
+        centerTitle: true,
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 150,
+            width: 150,
+            padding: const EdgeInsets.all(30),
+            margin: const EdgeInsets.all(20),
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.pink,
+            ),
+            child: (const FlutterLogo()),
+          ),
+          Expanded(
+            child: Center(
+              child: Column(
+                children: [
+                  const Text("Welcome to Flutter"),
+                  Text(
+                    '$_counter',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+      drawer: const Drawer(
+        child: Center(
+          child: Text("My Profile"),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: "Liked $_counter times",
+        child: const Icon(Icons.thumb_up_alt_sharp),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+                onPressed: () {
+                  debugPrint("Home button clicked");
+                },
+                icon: const Icon(Icons.home)),
+            IconButton(
+                onPressed: () {
+                  debugPrint("Search button clicked");
+                },
+                icon: const Icon(Icons.search)),
+            IconButton(
+                onPressed: () {
+                  debugPrint("Settings button clicked");
+                },
+                icon: const Icon(
+                  Icons.settings,
+                )),
+          ],
+        ),
+      ),
     );
   }
 }
