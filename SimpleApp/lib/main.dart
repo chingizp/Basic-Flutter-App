@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 void main() {
   runApp(const MyApp());
@@ -41,18 +42,32 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // ignore: unused_field
-  int _counter = 0;
+  double _loop = 4;
+  bool isAmber = false;
+  Timer? timer;
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(Duration(seconds: _loop.toInt()), (Timer timer) {
+      setState(() {
+        isAmber = !isAmber;
+      });
+    });
+  }
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+  _changeTimer() {
+    timer!.cancel();
+    timer = Timer.periodic(Duration(seconds: _loop.toInt()), (timer) {
+      setState(() {
+        isAmber = !isAmber;
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: isAmber ? Colors.amber : Colors.green,
       appBar: AppBar(
         title: const Text("Flutter App"),
         centerTitle: true,
@@ -71,17 +86,22 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             child: (const FlutterLogo()),
           ),
-          Expanded(
+          Slider(
+              value: _loop,
+              min: 0,
+              max: 15,
+              activeColor: Colors.black,
+              divisions: 15,
+              onChanged: (value) {
+                setState(() {
+                  _loop = value;
+                  _changeTimer();
+                });
+              }),
+          Text(_loop.toString()),
+          const Expanded(
             child: Center(
-              child: Column(
-                children: [
-                  const Text("Welcome to Flutter"),
-                  Text(
-                    '$_counter',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  )
-                ],
-              ),
+              child: Text("Welcome to Flutter"),
             ),
           )
         ],
@@ -90,11 +110,6 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Center(
           child: Text("My Profile"),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: "Liked $_counter times",
-        child: const Icon(Icons.thumb_up_alt_sharp),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
