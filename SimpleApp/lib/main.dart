@@ -59,13 +59,7 @@ class MyApp extends StatelessWidget {
               child: Text("My Profile"),
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              debugPrint("Liked");
-            },
-            tooltip: "Like Us",
-            child: const Icon(Icons.thumb_up_sharp),
-          ),
+          floatingActionButton: const LikeUsButton(),
           bottomNavigationBar: BottomAppBar(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -91,5 +85,32 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ));
+  }
+}
+
+class LikeUsButton extends StatefulWidget {
+  const LikeUsButton({super.key});
+
+  @override
+  State<LikeUsButton> createState() => _LikeUsButtonState();
+}
+
+class _LikeUsButtonState extends State<LikeUsButton> {
+  // ignore: unused_field
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: _incrementCounter,
+      tooltip: "Liked $_counter times",
+      child: const Icon(Icons.thumb_up_alt_sharp),
+    );
   }
 }
